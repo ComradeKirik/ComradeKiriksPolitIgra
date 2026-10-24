@@ -2,6 +2,8 @@ from aiogram import Bot, Dispatcher
 from aiogram.client.session.aiohttp import AiohttpSession
 from aiogram.filters import CommandStart
 from aiogram.types import Message
+
+from handlers.start_handler import router
 import asyncio
 
 
@@ -12,9 +14,7 @@ class BotRun:
         self.dp = Dispatcher()
 
     def _register_handlers(self):
-        @self.dp.message(CommandStart())
-        async def start_handler(message: Message):
-            await message.answer("hello")
+        self.dp.include_router(router)
 
     async def run(self):
         self._register_handlers()
